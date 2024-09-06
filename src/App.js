@@ -10,7 +10,7 @@ const initialItems = [
 
 export default function App(){
   return(
-    <div className="App">
+    <div className="app">
     <Logo/>
     <Form/>
     <PackingList/>
@@ -37,6 +37,14 @@ function Form()
   {
       // This method prevents the default behavior of the form submission. By default, submitting a form triggers a page reload or navigation to a new page
       e.preventDefault();
+
+      if(!description) return;
+
+      const newItem ={description , quantity , packed:false ,id:Date.now()};
+      console.log(newItem);
+
+      setDescription("");
+      setQuantity(1);
 
   }
 
