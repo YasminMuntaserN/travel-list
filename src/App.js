@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Logo } from "./components/Logo.js";
 import { Form } from "./components/Form.js";
-
+import { PackingList } from "./components/PackingList.js";
 
 
 export default function App() {
@@ -50,70 +50,9 @@ export default function App() {
   );
 }
 
-function Item({ item, onDeleteItem, onToggleItem }) {
-  return (
-    <li>
-      <input
-        type="checkbox"
-        value={item.packed}
-        onChange={() => onToggleItem(item.id)}
-      />
-      <span
-        style={item.packed ? { textDecoration: "line-through" } : {}}
-      >
-        {item.quantity} {item.description}
-      </span>
-      <button onClick={() => onDeleteItem(item.id)}>❌</button>
-    </li>
-  );
-}
-
-function PackingList({ items, onDeleteItem, onToggleItem ,onClearList }) {
-  // State to keep track of the sorting method
-  const [sortBy, setSortBy] = useState("input");
-
-  let sortedItems;
-
-  // Sort items based on the selected sorting method
-  if (sortBy === "input") sortedItems = items;
-
-  // Sort by description alphabetically
-  if (sortBy === "description")
-    sortedItems = items
-      .slice()
-      .sort((a, b) => a.description.localeCompare(b.description));
-
-  // Sort by packed status (not packed first)
-  if (sortBy === "packed")
-    sortedItems = items
-      .slice()
-      .sort((a, b) => Number(a.packed) - Number(b.packed));
 
 
-  return (
-    <div className="list">
-      <ul>
-        {sortedItems.map(item => (
-          <Item
-            item={item}
-            key={item.id}
-            onDeleteItem={onDeleteItem}
-            onToggleItem={onToggleItem}
-          />
-        ))}
-      </ul>
-      <div className="actions">
-        {/* Dropdown to select sorting method */}
-        <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-          <option value="input">Sort by input order</option>
-          <option value="description">Sort by description</option>
-          <option value="packed">Sort by packed status</option>
-        </select>
-        <button onClick={onClearList}>clear list</button>
-      </div>
-    </div>
-  );
-}
+
 
 function Stats({ items }) {
   // Display a message if there are no items
