@@ -105,10 +105,30 @@ function Item({ item, onDeleteItem, onToggleItem }) {
 }
 
 function PackingList({ items, onDeleteItem, onToggleItem }) {
+  // State to keep track of the sorting method
+  const [sortBy, setSortBy] = useState("input");
+
+  let sortedItems;
+
+  // Sort items based on the selected sorting method
+  if (sortBy === "input") sortedItems = items;
+
+  // Sort by description alphabetically
+  if (sortBy === "description")
+    sortedItems = items
+      .slice()
+      .sort((a, b) => a.description.localeCompare(b.description));
+
+  // Sort by packed status (not packed first)
+  if (sortBy === "packed")
+    sortedItems = items
+      .slice()
+      .sort((a, b) => Number(a.packed) - Number(b.packed));
+
   return (
     <div className="list">
       <ul>
-        {items.map(item => (
+        {sortedItems.map(item => (
           <Item
             item={item}
             key={item.id}
@@ -117,33 +137,42 @@ function PackingList({ items, onDeleteItem, onToggleItem }) {
           />
         ))}
       </ul>
+      <div className="actions">
+        {/* Dropdown to select sorting method */}
+        <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+          <option value="input">Sort by input order</option>
+          <option value="description">Sort by description</option>
+          <option value="packed">Sort by packed status</option>
+        </select>
+      </div>
     </div>
   );
 }
 
-function Stats({items}) {
-    if(items.length === 0){
-      return(<div className="stats">
-        <em>
-            start adding some items to your packing list 🚀
-        </em>
-        </div>) 
+function Stats({ items }) {
+  // Display a message if there are no items
+  if (items.length === 0) {
+    return (
+      <div className="stats">
+        <em>Start adding some items to your packing list 🚀</em>
+      </div>
+    );
   }
-  const itemsNum = items.length;
-  const packedItem = items.filter(item => item.packed).length;
-  const percentage = Math.round((packedItem /itemsNum) *100);
+
+  const itemsNum = items.length; // Total number of items
+  const packedItem = items.filter(item => item.packed).length; // Number of packed items
+  const percentage = Math.round((packedItem / itemsNum) * 100); // Calculate percentage of packed items
+
   return (
     <footer className="stats">
-      {
-      percentage === 100 ?
-      (<em>
-        You got everything ! Ready to go ✈️
-      </em>)
-      :
-      (<em>
-        👜 You have {itemsNum} items on your list, and you already packed {packedItem} ({percentage}%)
-      </em>) 
-      }
+      {percentage === 100 ? (
+        <em>You got everything! Ready to go ✈️</em>
+      ) : (
+        <em>
+          👜 You have {itemsNum} items on your list, and you already packed{" "}
+          {packedItem} ({percentage}%)
+        </em>
+      )}
     </footer>
   );
 }
