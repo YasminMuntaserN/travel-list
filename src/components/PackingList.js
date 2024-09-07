@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Item } from "./components/Item.js";
+import Item from "./Item.js";
 
-function PackingList({ items, onDeleteItem, onToggleItem ,onClearList }) {
+export default function PackingList({ items, onDeleteItem, onToggleItem ,onClearList }) {
   // State to keep track of the sorting method
   const [sortBy, setSortBy] = useState("input");
 
@@ -46,4 +46,4 @@ function PackingList({ items, onDeleteItem, onToggleItem ,onClearList }) {
       </div>
     </div>
   );
-}
+} 

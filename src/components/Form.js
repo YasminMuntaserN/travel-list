@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function Form({ onAddItem }) {
+export default function Form({ onAddItem }) {
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState(1);
 

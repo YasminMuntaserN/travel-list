@@ -1,4 +1,4 @@
-export function Stats({ items }) {
+export default function Stats({ items }) {
   // Display a message if there are no items
   if (items.length === 0) {
     return (
