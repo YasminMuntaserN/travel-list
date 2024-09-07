@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Logo } from "./components/Logo.js";
+
 
 export default function App() {
   // State for managing the list of items
@@ -44,10 +46,6 @@ export default function App() {
       <Stats items={items}  />
     </div>
   );
-}
-
-function Logo() {
-  return <h1>🌴 Far Away 👜</h1>;
 }
 
 function Form({ onAddItem }) {
