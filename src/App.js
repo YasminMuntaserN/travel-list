@@ -23,8 +23,12 @@ export default function App() {
     );
   }
 
-  function handleClearList(){
-    setItems([]);
+  function handleClearList() {
+    // Display a confirmation dialog to the user
+    const confirmed = window.confirm('Are you sure you want to clear the list?');
+    
+    // If the user confirms, clear the list by setting items to an empty array
+    if (confirmed) setItems([]);
   }
   
   return (
